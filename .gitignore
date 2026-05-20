@@ -2,10 +2,10 @@
 .venv/
 
 # Playwright/Koyfin session
-scraper/koyfin_scraper/koyfin_session/
+koyfin_session/
 
 # Generated Excel outputs
-scraper/koyfin_scraper/*.xlsx
+*.xlsx
 
 # Python cache
 __pycache__/
