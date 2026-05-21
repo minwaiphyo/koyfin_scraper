@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import re
 import os
+import json
+
 
 BASE_URL = "https://app.koyfin.com/snapshot/s"
 
@@ -21,20 +23,15 @@ FA_SOLVENCY_URL = (
     "00000000-ca5e-4441-95c7-9905b201c7af"
 )
 
-COMPANIES = [
-    {
-        "company": "Nike Inc",
-        "brands": "Nike",
-        "ticker": "NKE",
-        "koyfin_id": "eq-s7cdjj",
-    },
-    {
-        "company": "Under Armour Inc",
-        "brands": "Under Armour",
-        "ticker": "UAA",
-        "koyfin_id": "eq-3epv7m",
-    },
-]
+COMPANIES_FILE = "companies.json"
+
+
+def load_companies():
+    if not os.path.exists(COMPANIES_FILE):
+        return []
+
+    with open(COMPANIES_FILE, "r", encoding="utf-8") as file:
+        return json.load(file)
 
 OUTPUT_FILE = "koyfin_overview_output.xlsx"
 
@@ -285,7 +282,8 @@ def main():
 
         page = browser.new_page()
 
-        for company in COMPANIES:
+        companies = load_companies()
+        for company in companies:
             print(f"Scraping {company['ticker']}...")
             row = scrape_company(page, company)
             rows.append(row)

@@ -1,0 +1,14 @@
+[
+  {
+    "company": "Nike Inc",
+    "brands": "Nike",
+    "ticker": "NKE",
+    "koyfin_id": "eq-s7cdjj"
+  },
+  {
+    "company": "Under Armour Inc",
+    "brands": "Under Armour",
+    "ticker": "UAA",
+    "koyfin_id": "eq-3epv7m"
+  }
+]
