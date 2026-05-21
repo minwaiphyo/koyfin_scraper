@@ -224,7 +224,7 @@ Login to Koyfin
 ```
 
 3. A Chromium browser window will open
-4. Log into your Koyfin account
+4. Log into your Koyfin account manually
 5. Close the browser window after login
 
 Your session will be stored locally inside:
@@ -234,6 +234,93 @@ koyfin_session/
 ```
 
 ---
+
+## Important Login Note
+
+Please log in using your:
+
+- Koyfin email/password account
+
+Do NOT use:
+
+- Google Sign-In / Google OAuth
+
+Google OAuth may block automated Chromium browsers used by Playwright.
+
+If you currently use Google Sign-In for Koyfin, create a normal Koyfin password login first before using the application.
+
+# Understanding Koyfin ID
+
+Each company in Koyfin has a unique identifier called the **Koyfin ID**.
+
+The scraper uses this ID to navigate directly to the company’s financial pages.
+
+---
+
+# How to Find the Koyfin ID
+
+## Step 1
+
+Open the company page in Koyfin.
+
+Example:
+
+```text
+https://app.koyfin.com/snapshot/s/eq-s7cdjj
+```
+
+---
+
+## Step 2
+
+Look at the last part of the URL:
+
+```text
+eq-s7cdjj
+```
+
+This is the:
+
+```text
+Koyfin ID
+```
+
+---
+
+# Example
+
+| Company      | URL                                         | Koyfin ID |
+| ------------ | ------------------------------------------- | --------- |
+| Nike         | https://app.koyfin.com/snapshot/s/eq-s7cdjj | eq-s7cdjj |
+| Under Armour | https://app.koyfin.com/snapshot/s/eq-3epv7m | eq-3epv7m |
+
+---
+
+# Where to Enter It
+
+Inside the application:
+
+| Field     | Example   |
+| --------- | --------- |
+| Koyfin ID | eq-s7cdjj |
+
+---
+
+# Important
+
+Only enter the final ID portion of the URL.
+
+Correct:
+
+```text
+eq-s7cdjj
+```
+
+Incorrect:
+
+```text
+https://app.koyfin.com/snapshot/s/eq-s7cdjj
+```
 
 ## Add Companies
 
