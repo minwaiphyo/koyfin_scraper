@@ -1,5 +1,4 @@
 # -*- mode: python ; coding: utf-8 -*-
-import os
 from PyInstaller.utils.hooks import collect_all
 
 datas = []
@@ -10,8 +9,8 @@ datas += tmp_ret[0]; binaries += tmp_ret[1]; hiddenimports += tmp_ret[2]
 
 
 a = Analysis(
-    [os.path.join(SPECPATH, '..', 'app.py')],
-    pathex=[os.path.join(SPECPATH, '..')],
+    ['app.py'],
+    pathex=[],
     binaries=binaries,
     datas=datas,
     hiddenimports=hiddenimports,
@@ -33,8 +32,8 @@ exe = EXE(
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
-    upx=False,          # UPX compression is flagged by most AV engines
-    console=True,       # Show console so AV doesn't treat it as a hidden process
+    upx=True,
+    console=False,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
@@ -46,7 +45,7 @@ coll = COLLECT(
     a.binaries,
     a.datas,
     strip=False,
-    upx=False,          # UPX compression is flagged by most AV engines
+    upx=True,
     upx_exclude=[],
     name='KoyfinScraper',
 )

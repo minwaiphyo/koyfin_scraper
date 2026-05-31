@@ -23,3 +23,6 @@ dist/
 build/
 
 # spec is now tracked under config/ — no blanket *.spec rule needed
+
+*.pfx
+

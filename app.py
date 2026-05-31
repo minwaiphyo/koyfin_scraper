@@ -8,12 +8,30 @@ from tkinter import ttk, messagebox
 from bs4 import BeautifulSoup
 import pandas as pd
 from playwright.sync_api import sync_playwright
+from pathlib import Path
 
 
 # --- Paths ---
-COMPANIES_FILE = os.path.join("data", "companies.json")
-OUTPUT_FILE = os.path.join("output", "koyfin_overview_output.xlsx")
-SESSION_DIR = "koyfin_session"
+
+APP_DATA_DIR = Path(os.getenv("LOCALAPPDATA")) / "KoyfinScraper"
+
+DATA_DIR = APP_DATA_DIR / "data"
+OUTPUT_DIR = APP_DATA_DIR / "output"
+SESSION_DIR = APP_DATA_DIR / "koyfin_session"
+
+DEFAULT_COMPANIES_FILE = Path(__file__).parent / "companies.json"
+
+if not COMPANIES_FILE.exists() and DEFAULT_COMPANIES_FILE.exists():
+    import shutil
+    shutil.copy(DEFAULT_COMPANIES_FILE, COMPANIES_FILE)
+
+# Create directories automatically
+DATA_DIR.mkdir(parents=True, exist_ok=True)
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+SESSION_DIR.mkdir(parents=True, exist_ok=True)
+
+COMPANIES_FILE = DATA_DIR / "companies.json"
+OUTPUT_FILE = OUTPUT_DIR / "koyfin_overview_output.xlsx"
 
 # --- Koyfin URLs ---
 BASE_URL = "https://app.koyfin.com/snapshot/s"
@@ -239,12 +257,11 @@ def build_vertical_output(rows):
 
 
 def run_scraper():
-    os.makedirs("output", exist_ok=True)
     rows = []
 
     with sync_playwright() as p:
         browser = p.chromium.launch_persistent_context(
-            user_data_dir=SESSION_DIR,
+            user_data_dir=str(SESSION_DIR),
             headless=False,
         )
         page = browser.new_page()
@@ -384,7 +401,7 @@ class App:
 
             with sync_playwright() as p:
                 browser = p.chromium.launch_persistent_context(
-                    user_data_dir=SESSION_DIR,
+                    user_data_dir=str(SESSION_DIR),
                     headless=False,
                 )
                 page = browser.new_page()
@@ -427,7 +444,7 @@ class App:
         if not os.path.exists(OUTPUT_FILE):
             messagebox.showwarning("No Output", "Run the scraper first.")
             return
-        os.startfile(OUTPUT_FILE)
+        os.startfile(str(OUTPUT_FILE))
 
 
 if __name__ == "__main__":
