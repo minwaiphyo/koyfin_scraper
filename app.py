@@ -19,12 +19,6 @@ DATA_DIR = APP_DATA_DIR / "data"
 OUTPUT_DIR = APP_DATA_DIR / "output"
 SESSION_DIR = APP_DATA_DIR / "koyfin_session"
 
-DEFAULT_COMPANIES_FILE = Path(__file__).parent / "companies.json"
-
-if not COMPANIES_FILE.exists() and DEFAULT_COMPANIES_FILE.exists():
-    import shutil
-    shutil.copy(DEFAULT_COMPANIES_FILE, COMPANIES_FILE)
-
 # Create directories automatically
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -32,6 +26,15 @@ SESSION_DIR.mkdir(parents=True, exist_ok=True)
 
 COMPANIES_FILE = DATA_DIR / "companies.json"
 OUTPUT_FILE = OUTPUT_DIR / "koyfin_overview_output.xlsx"
+
+# Copy default companies.json on first run
+DEFAULT_COMPANIES_FILE = Path(__file__).parent / "companies.json"
+
+if not COMPANIES_FILE.exists() and DEFAULT_COMPANIES_FILE.exists():
+    import shutil
+    shutil.copy(DEFAULT_COMPANIES_FILE, COMPANIES_FILE)
+
+
 
 # --- Koyfin URLs ---
 BASE_URL = "https://app.koyfin.com/snapshot/s"
